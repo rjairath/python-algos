@@ -11,5 +11,27 @@ def subArray(arr):
             print()
 
 
-arr = [1, 2, 3, 4]
-subArray(arr)
+def subArrayRecursive(arr, start, end):
+    if end == len(arr):
+        return
+    if start > end:
+        subArrayRecursive(arr, 0, end+1)
+    else:
+        print(arr[start: end+1])
+        subArrayRecursive(arr, start+1, end)
+
+
+def printSubsequences(arr, index, subarray):
+    if index == len(arr):
+        # only print non empty subsequence
+        print(subarray)
+        return
+
+    printSubsequences(arr, index+1, subarray)
+    printSubsequences(arr, index+1, subarray+[arr[index]])
+    return
+
+
+arr = [1, 2, 3]
+n = len(arr)
+subArrayRecursive(arr, 0, 0)
