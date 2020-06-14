@@ -48,6 +48,24 @@ class Graph:
             self.DFS(temp.value)
             temp = temp.next
 
+    def BFS(self, start_node_num):
+        start_node = self.adjList[start_node_num]
+        queue = [start_node_num]
+        self.visitedArray[start_node_num] = True
+
+        while(len(queue) > 0):
+            # item is a number
+            item = queue.pop(0)
+            print(item)
+
+            temp = self.adjList[item]
+            temp = temp.next
+            while(temp):
+                if self.visitedArray[temp.value] == False:
+                    queue.append(temp.value)
+                    self.visitedArray[temp.value] = True
+                temp = temp.next
+
 
 g = Graph(4)
 g.addEdge(0, 1)
@@ -58,5 +76,5 @@ g.addEdge(2, 3)
 g.addEdge(3, 3)
 
 g.printGraph()
-print('DFS: ')
-g.DFS(2)
+print('BFS: ')
+g.BFS(2)
