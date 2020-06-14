@@ -8,12 +8,23 @@ class Graph:
     def __init__(self, vertexCount):
         self.vertexCount = vertexCount
         self.adjList = [None] * self.vertexCount
+        self.visitedArray = [False] * self.vertexCount
 
     def addEdge(self, from_val, to_val):
+        if self.adjList[from_val] is None:
+            from_node = Node(from_val)
+            self.adjList[from_val] = from_node
+
         to_node = Node(to_val)
         # insert at the head of LL as it is an O(1) operation
-        to_node.next = self.adjList[from_val]
-        self.adjList[from_val] = to_node
+        # to_node.next = self.adjList[from_val]
+        # self.adjList[from_val] = to_node
+
+        # try inserting at end now
+        temp = self.adjList[from_val]
+        while(temp.next):
+            temp = temp.next
+        temp.next = to_node
 
     def printGraph(self):
         for i in range(self.vertexCount):
@@ -24,14 +35,28 @@ class Graph:
                 temp = temp.next
             print()
 
+    def DFS(self, start_node_num):
+        start_node = self.adjList[start_node_num]
+        if self.visitedArray[start_node_num] == True:
+            return
+        self.visitedArray[start_node_num] = True
+        print(start_node_num)
 
-graph = Graph(5)
-graph.addEdge(0, 1)
-graph.addEdge(0, 4)
-graph.addEdge(1, 2)
-graph.addEdge(1, 3)
-graph.addEdge(1, 4)
-graph.addEdge(2, 3)
-graph.addEdge(3, 4)
+        temp = start_node.next
+        while(temp):
+            # print(temp.value, 'val.......')
+            self.DFS(temp.value)
+            temp = temp.next
 
-graph.printGraph()
+
+g = Graph(4)
+g.addEdge(0, 1)
+g.addEdge(0, 2)
+g.addEdge(1, 2)
+g.addEdge(2, 0)
+g.addEdge(2, 3)
+g.addEdge(3, 3)
+
+g.printGraph()
+print('DFS: ')
+g.DFS(2)
